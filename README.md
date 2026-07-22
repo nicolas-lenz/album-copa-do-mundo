@@ -75,7 +75,7 @@ Windows:
 Instale as dependências:
 
 ```bash
-pip install fastapi uvicorn
+pip install -r requirements.txt
 ```
 
 Execute a API:
