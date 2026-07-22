@@ -110,6 +110,22 @@ ou utilize um servidor local para executar o projeto.
 
 ---
 
+## 🔌 Endpoints da API
+
+### `GET /`
+Retorna uma mensagem inicial da API.
+
+### `GET /figurinhas`
+Retorna a lista de todas as figurinhas disponíveis no álbum.
+
+### `GET /figurinhas/{id}`
+Busca uma figurinha específica pelo seu ID.
+
+### `GET /figurinhas/total`
+Retorna informações sobre o progresso do álbum, como total de figurinhas, figurinhas preenchidas e faltantes.
+
+---
+
 ## ✨ Funcionalidades
 
 ✅ Álbum digital interativo  
@@ -118,8 +134,7 @@ ou utilize um servidor local para executar o projeto.
 ✅ Organização de figurinhas históricas da Copa do Mundo  
 ✅ Tema claro e escuro  
 ✅ Integração entre Frontend e Backend  
-✅ API desenvolvida com FastAPI  
-
+✅ API desenvolvida com FastAPI
 ---
 
 ## 📸 Demonstração
