@@ -5,13 +5,17 @@
 // ===================================================
 const API_BASE_URL = "http://localhost:8000";
 
+function criarUrlDaApi(caminho) {
+    return new URL(caminho, `${API_BASE_URL}/`).href;
+}
+
 // ===================================================
 // FUNÇÃO: Preenche os slots do álbum com imagens da API
 // Esta função é chamada após o álbum ser inicializado.
 // ===================================================
 async function preencherFigurinhas() {
     try {
-        const response = await fetch(`${API_BASE_URL}/figurinhas`);
+        const response = await fetch(criarUrlDaApi("/figurinhas"));
         if (!response.ok) {
             throw new Error(`Erro ao carregar figurinhas da API: ${response.status} ${response.statusText}`);
         }
@@ -37,7 +41,7 @@ async function preencherFigurinhas() {
                     img.onload = () => {
                         slot.classList.add("slot-preenchido");
                     };
-                    img.src = `${API_BASE_URL}${figurinha.imagem_url}`;
+                    img.src = criarUrlDaApi(figurinha.imagem_url);
                     slot.appendChild(img);
                 }
             }

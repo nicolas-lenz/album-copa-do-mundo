@@ -7,11 +7,19 @@ from fastapi.middleware.cors import CORSMiddleware
 # Cria a aplicação FastAPI
 app = FastAPI()
 
+@app.get("/")
+def inicio():
+    return {
+        "mensagem": "API do Álbum da Copa do Mundo funcionando!"
+    }
+
 # Configuração do Middleware CORS para aceitar requisições de qualquer origem
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    # Não há cookies/autenticação: credenciais não devem ser combinadas com
+    # origem curinga. Isso permite também o frontend em servidor local.
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -241,7 +249,9 @@ def obter_figurinha(id: int):
     raise HTTPException(status_code=404, detail="Figurinha não encontrada")
 
 # Endpoint para servir a imagem da figurinha pelo seu ID usando glob.
-# Aceita tanto a rota antiga "/figurinhas/{id}/imagem" quanto a rota contendo o nome do arquivo "/figurinhas/{id}/imagem/{filename}"
+# Aceita a URL informada pelo JSON, que contém o nome do arquivo, e a rota
+# curta para compatibilidade com consumidores já existentes.
+@app.get("/figurinhas/{id}/imagem/{filename}")
 @app.get("/figurinhas/{id}/imagem")
 def obter_imagem_figurinha(id: int, filename: str = None):
     """
@@ -253,6 +263,8 @@ def obter_imagem_figurinha(id: int, filename: str = None):
     padrao = os.path.join(PASTA_IMAGENS, f"{id:02d}*")
     arquivos = glob.glob(padrao)
     if filename:
+        if not filename.startswith(f"{id:02d}"):
+            raise HTTPException(status_code=404, detail="Imagem não encontrada")
         # When a specific filename is requested, look for it directly in the base images folder
         caminho_imagem = os.path.join(PASTA_IMAGENS, filename)
         if not os.path.isfile(caminho_imagem):

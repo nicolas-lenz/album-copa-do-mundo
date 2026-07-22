@@ -100,13 +100,15 @@ Entre na pasta do frontend:
 cd Frontend
 ```
 
-Abra o arquivo:
+Execute um servidor HTTP local:
 
-```text
-index.html
+```bash
+python -m http.server 5500
 ```
 
-ou utilize um servidor local para executar o projeto.
+Abra `http://127.0.0.1:5500` no navegador. Evite abrir `index.html` com
+`file://`, pois navegadores podem impor restrições de origem nesse modo.
+Mantenha o backend em execução em `http://localhost:8000`.
 
 ---
 
